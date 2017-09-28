@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:json="http://www.mulesoft.org/schema/mule/json" xmlns:http="http://www.mulesoft.org/schema/mule/http" xmlns:encryption="http://www.mulesoft.org/schema/mule/encryption"
+	xmlns="http://www.mulesoft.org/schema/mule/core" xmlns:doc="http://www.mulesoft.org/schema/mule/documentation"
+	xmlns:spring="http://www.springframework.org/schema/beans" 
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-current.xsd
+http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/json http://www.mulesoft.org/schema/mule/json/current/mule-json.xsd">
+    <!-- <spring:beans>
+        <spring:bean id="Bean" name="Bean" class="org.mule.modules.security.placeholder.SecurePropertyPlaceholderModule">
+            <spring:property name="encryptionMode" value="CBC"/>
+            <spring:property name="encryptionAlgorithm" value="AES"/>
+            <spring:property name="location" value="${mule.env}.secure.properties"/>
+            <spring:property name="ignoreUnresolvablePlaceholders" value="true"/>
+            <spring:property name="ignoreResourceNotFound" value="true"/>
+            <spring:property name="key" value="${secure.key}"/>
+        </spring:bean>
+    </spring:beans> -->
+    <http:listener-config name="HTTP_Listener_Configuration" host="0.0.0.0" port="8085" doc:name="HTTP Listener Configuration"/>
+    <flow name="poc_sppFlow">
+        <http:listener config-ref="HTTP_Listener_Configuration" path="/test" doc:name="HTTP"/>
+        <set-payload value="#['Hello']"  doc:name="Set Payload"/>
+        <logger message="#['Printed']" level="INFO" doc:name="Logger"/>
+    </flow>
+</mule>
